@@ -1,0 +1,15 @@
+.leaflet-container .leaflet-control-mouseposition{
+left:80px;
+bottom:-25px;
+font:'monaco', 'Consolas', "Liberation Mono", Courier, monospace;
+font-size:18px;
+font-weight:bolder;
+font-style:normal;
+text-align:center;
+background-color:transparent;
+padding:0 5px;
+margin:0;
+color:#f9f900;
+background-color:transparent,
+}
+

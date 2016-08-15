@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="img/logo.ico">
+    <meta name="viewport" content="width=device-width ,initial-scale=1.0">
+    <link rel="stylesheet" href="js/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="js/lib/fontAwesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="js/lib/leaflet/plugins/awesome/leaflet.awesome-markers.css">
+    <link rel="stylesheet" href="js/lib/bootstrap/plugins/datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="js/lib/bootstrap/plugins/switcher/css/bootstrap3/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="js/lib/bootstrap/plugins/combox/css/bootstrap-combobox.css">
+    <link rel="stylesheet" href="js/lib/leaflet/plugins/pancontrol/L.Control.Pan.css">
+    <link rel="stylesheet" href="js/lib/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="js/lib/leaflet/plugins/fullscreen/leaflet.fullscreen.css">
+    <link rel="stylesheet" href="js/lib/leaflet/plugins/mouseposition/L.Control.MousePosition.css">
+    <link rel="stylesheet" href="js/lib/leaflet/plugins/photo/Leaflet.Photo.css">
+    <link rel="stylesheet" href="js/lib/leaflet/plugins/cluster/MarkerCluster.css">
+    <link rel="stylesheet" href="js/lib/leaflet/plugins/cluster/MarkerCluster.Default.css">
+    <link rel="stylesheet" href="js/lib/jquery/jquery-ui/css/custom-theme/jquery-ui-1.10.0.custom.css">
+    <link rel="stylesheet" href="css/map.css">
+    <title>贵州省产业化一张图</title>
+    <script src="js/lib/leaflet/plugins/arc/arc.js"></script>
+    <script src="js/lib/pdfobject.js"></script>
+    <script src="js/lib/require.js" defer async="true" data-main="js/app/main-func-region"></script>
+    <style type="text/css">
+        #timeline{ width:auto; height:auto; overflow:hidden; position:relative; background:url('img/dot.gif') left 45px repeat-x; }
+        #dates{ width:auto; height:60px; overflow:hidden; }
+        #dates li{ list-style:none; float:left; width:100px; height:50px; font-size:20px; text-align:center; background:url('img/biggerdot.png') center bottom no-repeat; }
+        #dates a{ line-height:38px; padding-bottom:10px; }
+        #dates .selected{ font-size:38px; }
+        #issues{ width:auto; height:auto; overflow:hidden; }
+        #issues li{ width:auto; height:auto; list-style:none; float:left; }
+    </style>
+</head>
+<body>
+<!--整个html页面布局-->
+<div class="container-fluid page-wrapper">
+    <!--顶部导航条--><!--<nav class="navbar  navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                &lt;!&ndash;网站logo以及自适应移动设备按钮折叠按钮&ndash;&gt;
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bluce-menu" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+                        <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#" style="padding:0">
+                        <img alt="Brand" src="img/logo.ico">
+                    </a>
+                    <a class="navbar-brand" href="#">
+                        贵州省产业化一张图
+                    </a>
+                </div>
+                &lt;!&ndash;导航栏菜单&ndash;&gt;
+                <div class="collapse navbar-collapse" id="bluce-menu">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-line-chart" aria-hidden="true"></span> 进出口分析<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                <li>
+                                    <a href="#" id="m_overall_outputInput">
+                                        <span class="fa fa-stack-overflow"></span> 总体分析
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" id="m_year_outin">
+                                        <span class="fa fa-shirtsinbulk"></span> 逐年分析
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-search" aria-hidden="true"></span> 企业查询<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                <li>
+                                    <a href="#" id="m_OCQuery">
+                                        <span class="fa fa-industry"></span> 一般企业查询
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" id="m_KCQuery">
+                                        <span class="fa fa-beer"></span> 重点企业查询
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" id="cfasgis-toolbar-disasterStatistic">
+                                <span class="fa fa-calculator" aria-hidden="true"></span> 汽车行业
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-bars" style="color:#ffffff"></span> 更多<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-share" aria-hidden="true"></span> 推荐
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="fa fa-bookmark" aria-hidden="true"></span> 收藏
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>-->
+
+    <!--地图窗口-->
+    <div class="container-fluid content-wrapper">
+        <!--地图-->
+        <div id="map"></div>
+        <!--<div class="btn-group float-tool-div" role="group">
+             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <span class="fa fa-line-chart" aria-hidden="true"></span> 进出口分析<span class="caret"></span>
+             </button>
+             <ul class="dropdown-menu dropdown-menu-left">
+                 <li>
+                     <a href="#" id="m_overall_outputInput">
+                         <span class="fa fa-stack-overflow"></span> 总体分析
+                     </a>
+                 </li>
+                 <li role="separator" class="divider"></li>
+                 <li>
+                     <a href="#" id="m_year_outin">
+                         <span class="fa fa-shirtsinbulk"></span> 逐年分析
+                     </a>
+                 </li>
+             </ul>
+         </div>-->
+    </div>
+    <!--普通企业查询-->
+    <div class="container-fluid" id="m_ordinary_company_query_panel">
+        <div class="input-group">
+            <span class="input-group-addon header">请输入企业名称</span>
+            <input type="text" class="form-control" id="ordinary-company-name">
+            <span class="input-group-btn">
+                <button class="btn btn-default" id="btn-query-company-by-name" type="button">确定</button>
+            </span>
+        </div>
+    </div>
+    <!--重点企业查询-->
+    <div class="container-fluid" id="m_key_company_query_panel">
+        <div class="input-group">
+            <span class="input-group-addon header">重点领域</span>
+            <select class="form-control" id="pollution-kind">
+                <option>部分重点传统行业</option> <option>电力装备</option> <option>高档数控机床</option> <option>高技术船舶</option>
+                <option>高性能医疗器械</option> <option>各地自行上报的特色产业</option> <option>海洋工程装备</option> <option>航空装备</option>
+                <option>航天装备</option> <option>机器人</option> <option>节能与新能源汽车</option> <option>农机装备</option>
+                <option>生物医药</option> <option>先进轨道交通装备</option> <option>新材料</option> <option>新一代信息技术产业</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon header">子领域</span>
+            <select class="form-control" id="pollution-kind">
+                <option>部分重点传统行业</option> <option>电力装备</option> <option>高档数控机床</option> <option>高技术船舶</option>
+                <option>高性能医疗器械</option> <option>各地自行上报的特色产业</option> <option>海洋工程装备</option> <option>航空装备</option>
+                <option>航天装备</option> <option>机器人</option> <option>节能与新能源汽车</option> <option>农机装备</option>
+                <option>生物医药</option> <option>先进轨道交通装备</option> <option>新材料</option> <option>新一代信息技术产业</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon header">细分领域</span>
+            <select class="form-control" id="pollution-kind">
+                <option>部分重点传统行业</option> <option>电力装备</option> <option>高档数控机床</option> <option>高技术船舶</option>
+                <option>高性能医疗器械</option> <option>各地自行上报的特色产业</option> <option>海洋工程装备</option> <option>航空装备</option>
+                <option>航天装备</option> <option>机器人</option> <option>节能与新能源汽车</option> <option>农机装备</option>
+                <option>生物医药</option> <option>先进轨道交通装备</option> <option>新材料</option> <option>新一代信息技术产业</option>
+            </select>
+        </div>
+    </div>
+    <!--进出口历年时间轴查看-->
+    <div class="container-fluid" id="m_output-analysis-panel">
+        <div class="row">
+            <div id="timeline">
+                <ul id="dates">
+                    <li>
+                        <a href="#2000" id="m_2000">2000</a>
+                    </li>
+                    <li>
+                        <a href="#2001" id="m_2001">2001</a>
+                    </li>
+                    <li>
+                        <a href="#2002" id="m_2002">2002</a>
+                    </li>
+                    <li>
+                        <a href="#2003" id="m_2003">2003</a>
+                    </li>
+                    <li>
+                        <a href="#2004" id="m_2004">2004</a>
+                    </li>
+                    <li>
+                        <a href="#2005" id="m_2005">2005</a>
+                    </li>
+                    <li>
+                        <a href="#2006" id="m_2006">2006</a>
+                    </li>
+                    <li>
+                        <a href="#2007" id="m_2007">2007</a>
+                    </li>
+                    <li>
+                        <a href="#2008" id="m_2008">2008</a>
+                    </li>
+                    <li>
+                        <a href="#2009" id="m_2009">2009</a>
+                    </li>
+                    <li>
+                        <a href="#2010" id="m_2010">2010</a>
+                    </li>
+                    <li>
+                        <a href="#2011" id="m_2011">2011</a>
+                    </li>
+                    <li>
+                        <a href="#2012" id="m_2012">2012</a>
+                    </li>
+                    <li>
+                        <a href="#2013" id="m_2013">2013</a>
+                    </li>
+                    <li>
+                        <a href="#2014" id="m_2014">2014</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="m_outin-chart" style="height:300px"></div>
+            <!--<table class="table">
+                <thead>
+                    <tr>
+                        <th>地域</th>
+                        <th>出口总额（万美元）</th>
+                        <th>进口总额（万美元）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>亚洲</td>
+                        <td id="asia-output"></td>
+                        <td id="aisa-input"></td>
+                    </tr>
+                    <tr>
+                        <td>欧洲</td>
+                        <td id="europe-output"></td>
+                        <td id="europe-input"></td>
+                    </tr>
+                    <tr>
+                        <td>非洲</td>
+                        <td id="africa-output"></td>
+                        <td id="africa-input"></td>
+                    </tr>
+                    <tr>
+                        <td>拉丁美洲</td>
+                        <td id="southamerican-output"></td>
+                        <td id="southamerican-input"></td>
+                    </tr>
+                    <tr>
+                        <td>北美洲</td>
+                        <td id="northamerican-output"></td>
+                        <td id="northamerican-input"></td>
+                    </tr>
+                    <tr>
+                        <td>大洋洲</td>
+                        <td id="australia-output"></td>
+                        <td id="australia-input"></td>
+                    </tr>
+                    <tr>
+                        <td>总计</td>
+                        <td id="sum-output"></td>
+                        <td id="sum-input"></td>
+                    </tr>
+                </tbody>
+            </table>-->
+        </div>
+    </div>
+    <!--进出口总体一览图-->
+    <div class="container-fluid" id="m_output_in_overall_panel">
+        <div id="m_overall_chart" style="width:770px;height:500px"></div>
+    </div>
+</div>
+</body>
+</html>
